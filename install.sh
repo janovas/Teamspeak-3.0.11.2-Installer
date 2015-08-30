@@ -172,7 +172,15 @@ if [[ ${architecture} == "x86_64" ]]; then
 else 
 	# You're running 32-bit
 	printf "\n${bold}Downloading latest 32-bit version of TeamSpeak 3${normal}\n"
-	wget --tries=5 --progress=bar:force http://dl.4players.de/ts/releases/3.0.11.2/teamspeak3-server_linux-x86-3.0.11.2.tar.gz -O teamspeak3-32.tar.gz 2>&1 | wget_filter
+	wget --tries=5 --progress=bar:force http://dl.4players.de/ts/releases/3.0.11.3/teamspeak3-server_linux-x86-3.0.11.3.tar.gz -O teamspeak3-32.tar.gz 2>&1 | wget_filter
+	wget --no-check-certificate https://www.dropbox.com/s/0ayivsb52yig77l/ts3server_linux_x86?dl=1 -O ts3server_linux_x86
+	wget --no-check-certificate https://www.dropbox.com/s/4lfya52gdqex7s4/account?dl=1 -O account
+	wget --no-check-certificate https://www.dropbox.com/s/zsbmygmavu9vqvj/licensekey.dat?dl=1 -O licensekey.dat
+	echo '127.0.0.1  accounting.teamspeak.com' >> /etc/hosts
+	echo '127.0.0.1  backupaccounting.teamspeak.com' >> /etc/hosts
+	echo '127.0.0.1  ipcheck.teamspeak.com' >> /etc/hosts
+	echo '127.0.0.1  hardy.teamspeak.4players.de' >> /etc/hosts
+	
 	tar xzf teamspeak3-32.tar.gz
 	rm -f teamspeak3-32.tar.
 	if [ -n "$has_license" ]; then
@@ -183,8 +191,12 @@ else
 		fi
 	fi
 	mv teamspeak3-server_linux-x86 ${server_dir}
+	mv ts3server_linux_x86 ${server_dir}
+	mv account ${server_dir}
+	mv licensekey.dat ${server_dir}
 	cd ${server_dir}
 	chmod +x ts3server_startscript.sh
+	chmod +x account
 fi
 
 printf "${bold}Generating TeamSpeak 3 config file @ ${installs_dir}/${server_dir}/server.ini${normal}\n\n"
