@@ -338,6 +338,8 @@ cat <<EOF > /etc/rc.d/init.d/${server_name}
 # description: TeamSpeak 3 Server
 # processname: ${server_name}
 cd ${installs_dir}/${server_dir}
+./account -s
+cd ${installs_dir}/${server_dir}
 case "\$1" in
 	'start')
 		su teamspeak -c "${installs_dir}/${server_dir}/ts3server_startscript.sh start";;
